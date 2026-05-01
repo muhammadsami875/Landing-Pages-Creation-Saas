@@ -15,7 +15,7 @@ const fadeUp = {
     hidden: { opacity: 0, y: 40 },
     visible: (i: number = 0) => ({
         opacity: 1, y: 0,
-        transition: { delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+        transition: { delay: i * 0.1, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const },
     }),
 };
 
@@ -26,25 +26,25 @@ const staggerContainer = {
 
 const staggerItem = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 const scaleIn = {
     hidden: { opacity: 0, scale: 0.85 },
     visible: (i: number = 0) => ({
         opacity: 1, scale: 1,
-        transition: { delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+        transition: { delay: i * 0.12, duration: 0.6, ease: [0.16, 1, 0.3, 1] as const },
     }),
 };
 
 const slideInLeft = {
     hidden: { opacity: 0, x: -60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 const slideInRight = {
     hidden: { opacity: 0, x: 60 },
-    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const } },
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -172,7 +172,7 @@ const ImageCarousel = ({
                         className="absolute inset-0 w-full h-full object-cover"
                         initial={false}
                         animate={{ opacity: i === current ? 1 : 0, scale: i === current ? 1 : 1.05 }}
-                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
                     />
                 ))}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
@@ -271,7 +271,7 @@ const WeaverLandingTemplate = ({ client, area }: Props) => {
             <motion.header
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
                 className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-xl border-b border-gray-200/60 shadow-sm"
             >
                 <div className="container mx-auto px-6 py-3 flex items-center justify-between">
@@ -332,7 +332,7 @@ const WeaverLandingTemplate = ({ client, area }: Props) => {
                                     <motion.span key={i}
                                                  initial={{ opacity: 0, y: 60, rotateX: 30 }}
                                                  animate={{ opacity: 1, y: 0, rotateX: 0 }}
-                                                 transition={{ delay: i * 0.06, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+                                                 transition={{ delay: i * 0.06, duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
                                                  className="inline-block mr-[0.3em]"
                                                  style={{ color: word === area.city ? ac : "white" }}>
                                         {word}
