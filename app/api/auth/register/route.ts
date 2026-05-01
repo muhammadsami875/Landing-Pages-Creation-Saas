@@ -8,13 +8,12 @@ import { z } from "zod";
 const registerSchema = z.object({
     email: z.string().email(),
     password: z.string().min(8),
-    role: z.enum(["ADMIN", "CLIENT"]).optional().default("CLIENT"),
 });
 
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        const { email, password, role } = registerSchema.parse(body);
+        const { email, password } = registerSchema.parse(body);
 
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
@@ -27,7 +26,7 @@ export async function POST(request: NextRequest) {
         const hashedPassword = await bcrypt.hash(password, 12);
 
         const user = await prisma.user.create({
-            data: { email, password: hashedPassword, role },
+            data: { email, password: hashedPassword, role: "ADMIN" },
         });
 
         const token = await signToken({
@@ -45,7 +44,7 @@ export async function POST(request: NextRequest) {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
-            maxAge: 60 * 60 * 24 * 7, // 7 days
+            maxAge: 60 * 60 * 24 * 7,
             path: "/",
         });
 
