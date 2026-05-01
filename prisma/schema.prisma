@@ -1,0 +1,77 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String
+  role         Role          @default(ADMIN)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  landingPages LandingPage[]
+}
+
+model LandingPage {
+  id              String   @id @default(cuid())
+
+  // Routing
+  slug            String   @unique
+  fullPath        String   @unique
+
+  // Business Info
+  businessName    String
+  phone           String
+  email           String
+  address         String?
+  city            String
+  state           String   @default("AR")
+  mapEmbedUrl     String?
+
+  // Hero
+  heroH1          String
+  heroSubheadline String?
+  ctaText         String   @default("Request Free Inspection")
+
+  // Colors
+  primaryColor    String   @default("#1F2A6D")
+  secondaryColor  String   @default("#3E5F9A")
+  accentColor     String   @default("#F59E0B")
+
+  // Content
+  aboutText       String?  @db.Text
+  damageText      String?  @db.Text
+  localTrustText  String?  @db.Text
+  metaTitle       String?
+  metaDescription String?  @db.Text
+
+  // JSON fields
+  services        Json     @default("[]")
+  reviews         Json     @default("[]")
+  whyChooseUs     Json     @default("[]")
+
+  // Media
+  logoUrl         String?
+  heroImageUrl    String?
+  images          String[] @default([])
+
+  // Settings
+  published       Boolean  @default(false)
+  templateId      String   @default("weaver")
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String
+  user            User     @relation(fields: [createdBy], references: [id])
+}
+
+enum Role {
+  ADMIN
+}
